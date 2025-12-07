@@ -242,7 +242,6 @@ You’re encouraged to:
 License and contribution guidelines are intentionally lightweight and will be documented in:
 
 * `LICENSE`
-* `CONTRIBUTING.md` (optional, if this grows beyond a personal notebook)
 
 For now, feel free to open issues or pull requests if you have:
 
