@@ -15,7 +15,7 @@ dependencies = []
 
 [tool.black]
 line-length = 140
-extend-exclude = "scripts/trace_tree_sanity_checks\.py"
+extend-exclude = "scripts/trace_tree_sanity_checks.py"
 
 [tool.ruff]
 line-length = 140
