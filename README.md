@@ -237,6 +237,29 @@ You’re encouraged to:
 
 ---
 
+## 🔗 Related Project: Phase Loop Dynamics (PLD)
+
+This repository is a **framework-agnostic notebook** for understanding instability in multi-turn agents.  
+If you want the *formal governance model*, event lifecycle, and a full behavioral contract for  
+multi-turn stability, the parent conceptual project is:
+
+👉 **PLD — Phase Loop Dynamics**  
+https://github.com/kiyoshisasano/agent-pld-metrics
+
+PLD provides:
+
+- a **formal Drift → Repair → Reentry → Continue** lifecycle,
+- a **runtime reference implementation**,
+- **schema-level definitions**, metrics, and a complete taxonomy,
+- end-to-end examples of multi-turn stability governance.
+
+While this repository (**agent-instability-notes**) stands alone,  
+it also serves as a **practical companion** to PLD —  
+focused on practitioner vocabulary, early-instability signals,  
+and empirical metrics derived from traces.
+
+---
+
 ## 📄 License & contributions
 
 License and contribution guidelines are intentionally lightweight and will be documented in:
