@@ -1,0 +1,25 @@
+# Minimal dependencies for examples and notebooks
+
+# Core scientific stack
+pandas
+numpy
+
+# Plotting and visualization
+matplotlib
+
+# Jupyter environment (optional)
+jupyterlab
+notebook
+
+# JSONL + YAML utilities
+jsonlines
+yaml
+
+# Optional: ecosystem examples (always import-guarded)
+langfuse
+arize
+langchain
+
+# Developer tooling (optional)
+black
+ruff

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-instability-notes"
+version = "0.1.0"
+description = "Lightweight tools for inspecting early instability signals in multi-turn agents."
+authors = [
+  { name = "Your Name", email = "you@example.com" }
+]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []
+
+[tool.black]
+line-length = 88
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "B", "W"]
+exclude = [".git", "__pycache__", "build", "dist"]

@@ -1,0 +1,61 @@
+# License
+
+This project uses a **dual-license** structure similar to many open-source research repos.
+
+## 📄 Code License — Apache 2.0
+
+All **code files** (`*.py`, generator scripts, analysis utilities) are licensed under:
+
+> **Apache License 2.0**
+
+You may:
+
+* use the code commercially,
+* modify and redistribute it,
+* create derivative works,
+* include portions in closed-source systems,
+
+as long as you follow the conditions described in the Apache-2.0 license (e.g., preserving license notices).
+
+The full text of the Apache-2.0 license is available at:
+[https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
+
+A local copy should be placed in `LICENSE-APACHE` if you package this repo.
+
+---
+
+## 📝 Documentation License — CC BY 4.0
+
+All **documentation, notebooks, Markdown files, conceptual notes, metric definitions, and examples** are licensed under:
+
+> **Creative Commons Attribution 4.0 International (CC BY 4.0)**
+
+This means:
+
+* you may share and adapt the material for any purpose,
+* including commercial use,
+* as long as you provide proper attribution.
+
+Attribution example:
+
+```
+Adapted from agent-instability-notes (2025), CC-BY-4.0.
+```
+
+The full text is available at:
+[https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)
+
+A local copy should be placed in `LICENSE-CC-BY-4.0` if you package this repo.
+
+---
+
+## ✔ Summary
+
+| Category                                   | License    |
+| ------------------------------------------ | ---------- |
+| Code (`.py`, generator scripts, utilities) | Apache-2.0 |
+| Documentation, markdown, notebooks         | CC BY 4.0  |
+
+This structure keeps the **code maximally permissive** while ensuring the **conceptual materials receive proper attribution**.
+
+If you want, I can also generate the full text of both licenses as separate files (e.g., `LICENSES/`).

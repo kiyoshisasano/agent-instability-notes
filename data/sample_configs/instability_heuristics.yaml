@@ -1,0 +1,109 @@
+# Example heuristic definitions for instability episodes in multi-turn agents
+# These are deliberately lightweight and should be tuned to your own traces.
+
+# ---------------------------------------------------------------------
+# 1. Early instability signals (per session)
+# ---------------------------------------------------------------------
+
+early_instability:
+  # If any of these patterns occur within the first N turns,
+  # mark the session as having an early-instability signal.
+  max_turn_window: 8
+
+  drift_like_events:
+    enabled: true
+    min_count: 1
+
+  relative_latency_gap:
+    enabled: true
+    # Reuse the definition from metrics/relative-latency-gap.md
+    warn_threshold: 0.30   # 30%
+    alert_threshold: 0.45  # 45%
+
+  argument_reuse:
+    enabled: true
+    # Same tool args (hash) repeated this many times in a row
+    repeat_threshold: 3
+
+
+# ---------------------------------------------------------------------
+# 2. Correction & recovery loop heuristics
+# ---------------------------------------------------------------------
+
+correction_and_recovery:
+  # A minimal episode is defined as
+  #   drift_like → correction/self_check → stability_tag=="recovered"
+
+  drift_like_tags:
+    - drift_like
+
+  correction_tags:
+    - correction
+    - self_check
+
+  recovery_tag_key: stability_tag
+  recovery_tag_value: recovered
+
+  # If recovery takes more than this many turns, flag as slow recovery.
+  slow_recovery_turns: 6
+
+  # If drift reappears after a correction within this window, count as relapse.
+  relapse_window_turns: 10
+
+
+# ---------------------------------------------------------------------
+# 3. Looping / lack-of-progress heuristics
+# ---------------------------------------------------------------------
+
+looping:
+  # Repeated similar events without meaningful progress.
+
+  # Sliding window size (in events) for checking cycles.
+  window_size: 4
+
+  # Max distinct signatures in window to consider it a loop.
+  # e.g., if <= 2 distinct (event_type, args_hash) patterns, treat as a cycle.
+  max_distinct_signatures: 2
+
+  # Minimum number of consecutive loop windows before flagging.
+  min_repeated_windows: 3
+
+
+# ---------------------------------------------------------------------
+# 4. Session closure profile heuristics
+# ---------------------------------------------------------------------
+
+session_closure:
+  # Map low-level status fields to higher-level labels.
+  label_mapping:
+    ok: natural_completion
+    completed_after_correction: completed_after_correction
+    corrected: completed_after_correction
+    incomplete: incomplete
+    timeout: forced_stop
+    error: forced_stop
+
+  # If the last event is not a session_end and the gap since last timestamp
+  # exceeds this many seconds (in real logs), treat as abandonment.
+  abandonment_timeout_seconds: 900
+
+
+# ---------------------------------------------------------------------
+# 5. Severity scoring (optional)
+# ---------------------------------------------------------------------
+
+severity_scoring:
+  # Very small, additive heuristic scoring for episodes.
+
+  weights:
+    early_instability: 2
+    slow_recovery: 3
+    relapse: 4
+    loop_detected: 3
+    forced_stop: 5
+
+  # Thresholds for coarse severity labels.
+  buckets:
+    low: 0
+    medium: 4
+    high: 8

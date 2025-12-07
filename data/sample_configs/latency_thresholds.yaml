@@ -1,0 +1,28 @@
+# Example latency thresholds for detecting relative latency anomalies
+# These values are purely illustrative and should be adapted per system.
+
+# Thresholds expressed in milliseconds (absolute) or ratio (relative)
+
+absolute_thresholds:
+  # Any event exceeding these absolute latencies may be flagged
+  processing_ms_warn: 800
+  processing_ms_alert: 1500
+  tool_call_ms_warn: 1200
+  tool_call_ms_alert: 2500
+
+relative_thresholds:
+  # Relative latency gap = |a - b| / max(a, b)
+  # Values above these may indicate an early instability signal
+  sibling_span_gap_warn: 0.25   # 25%
+  sibling_span_gap_alert: 0.40  # 40%
+
+window_rules:
+  # Sliding window rules for short-term spikes
+  # e.g., if 3 spikes within 20 events → suspicious
+  short_window_size: 20
+  max_spikes_in_window: 3
+
+pattern_rules:
+  # Optional shape-based rules for latency curve irregularities
+  jitter_spike_ratio_warn: 1.5
+  jitter_spike_ratio_alert: 2.0
