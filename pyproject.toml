@@ -14,9 +14,11 @@ requires-python = ">=3.9"
 dependencies = []
 
 [tool.black]
-line-length = 88
+line-length = 140
 
 [tool.ruff]
-line-length = 88
-select = ["E", "F", "B", "W"]
+line-length = 140
 exclude = [".git", "__pycache__", "build", "dist"]
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "W"]
