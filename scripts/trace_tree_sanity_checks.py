@@ -150,7 +150,6 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
 
 
 def main(argv: Optional[List[str]] = None) -> None:
-    import sys
 
     args = parse_args(argv)
 
