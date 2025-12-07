@@ -73,9 +73,7 @@ def _rand_id(prefix: str, width: int = 8) -> str:
 def _base_start_time() -> datetime:
     # Arbitrary fixed base so runs are comparable
     # but still distinct per run
-    return datetime(2025, 1, 1, 10, 0, 0) + timedelta(
-        seconds=random.randint(0, 60)
-    )
+    return datetime(2025, 1, 1, 10, 0, 0) + timedelta(seconds=random.randint(0, 60))
 
 
 # ---------------------------------------------------------------------------
@@ -83,11 +81,7 @@ def _base_start_time() -> datetime:
 # ---------------------------------------------------------------------------
 
 
-def generate_long_horizon_session(
-    trace_idx: int,
-    turns: int,
-    noise: str,
-) -> Iterable[Event]:
+def generate_long_horizon_session(trace_idx: int, turns: int, noise: str) -> Iterable[Event]:
     base = _base_start_time()
     trace_id = f"lh_{trace_idx:03d}"
 
@@ -125,9 +119,7 @@ def generate_long_horizon_session(
         "input",
         {
             "turn": 1,
-            "content": (
-                "Run a multi-step checklist and keep it stable over time."
-            ),
+            "content": "Run a multi-step checklist and keep it stable over time.",
         },
     )
 
@@ -163,12 +155,7 @@ def generate_long_horizon_session(
             {
                 "turn": turn,
                 "latency_ms": base_latency,
-                "note": _reason_note(
-                    turn,
-                    drift_turn,
-                    recovery_turn,
-                    relapse_turn,
-                ),
+                "note": _reason_note(turn, drift_turn, recovery_turn, relapse_turn),
             },
         )
 
@@ -186,9 +173,7 @@ def generate_long_horizon_session(
             )
 
     # Final outcome
-    final_status = (
-        "stable" if relapse_turn > turns else "relapse_after_recovery"
-    )
+    final_status = "stable" if relapse_turn > turns else "relapse_after_recovery"
     yield emit(
         "system",
         "session_end",
@@ -218,9 +203,7 @@ def _reason_note(turn: int, drift: int, recovery: int, relapse: int) -> str:
 # ---------------------------------------------------------------------------
 
 
-def generate_simple_correction_loop_session(
-    trace_idx: int,
-) -> Iterable[Event]:
+def generate_simple_correction_loop_session(trace_idx: int) -> Iterable[Event]:
     base = _base_start_time()
     trace_id = f"loop_{trace_idx:03d}"
     ts = base
@@ -269,9 +252,7 @@ def generate_simple_correction_loop_session(
         {
             "turn": 2,
             "latency_ms": random.randint(260, 380),
-            "note": (
-                "Checklist grows to 6 items, constraint partially dropped."
-            ),
+            "note": "Checklist grows to 6 items, constraint partially dropped.",
         },
     )
 
