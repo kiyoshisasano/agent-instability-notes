@@ -1,7 +1,8 @@
 """Basic sanity checks for JSONL trace trees.
 
 This script is designed to work with the synthetic traces in
-`examples/synthetic_traces/` as well as similarly-structured JSONL logs.
+`examples/synthetic_traces/` as well as similarly-structured
+JSONL logs.
 
 It focuses on simple, structural checks that are often useful before
 running more detailed instability analysis:
@@ -123,7 +124,10 @@ def compute_span_fanout(events: List[Event]) -> Dict[str, int]:
     return children
 
 
-def detect_short_sessions(traces: Dict[str, List[Event]], min_events: int = 3) -> List[str]:
+def detect_short_sessions(
+    traces: Dict[str, List[Event]],
+    min_events: int = 3,
+) -> List[str]:
     """Return trace_ids with fewer than `min_events` events."""
     return [tid for tid, evs in traces.items() if len(evs) < min_events]
 
@@ -156,12 +160,14 @@ def main(argv: Optional[List[str]] = None) -> None:
         return
 
     traces = group_by_trace(events)
-    print(f"Loaded {len(events)} events across {len(traces)} sessions.\n")
+    num_events = len(events)
+    num_traces = len(traces)
+    print(f"Loaded {num_events} events across {num_traces} sessions.\n")
 
     # 1) Timestamp monotonicity
     non_mono = 0
     total_violations = 0
-    for tid, evs in traces.items():
+    for _tid, evs in traces.items():
         ok, violations = check_timestamp_monotonicity(evs)
         if not ok:
             non_mono += 1
@@ -183,7 +189,10 @@ def main(argv: Optional[List[str]] = None) -> None:
         for fan, cnt in sorted(fanouts.items()):
             print(f"  spans with {fan:2d} children: {cnt}")
     else:
-        print("  no parent-child relationships detected (no parent_span_id fields).")
+        print(
+            "  no parent-child relationships detected "
+            "(no parent_span_id fields).",
+        )
     print()
 
     # 3) Short sessions
