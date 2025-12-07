@@ -124,10 +124,7 @@ def compute_span_fanout(events: List[Event]) -> Dict[str, int]:
     return children
 
 
-def detect_short_sessions(
-    traces: Dict[str, List[Event]],
-    min_events: int = 3,
-) -> List[str]:
+def detect_short_sessions(traces: Dict[str, List[Event]], min_events: int = 3) -> List[str]:
     """Return trace_ids with fewer than `min_events` events."""
     return [tid for tid, evs in traces.items() if len(evs) < min_events]
 
@@ -150,7 +147,6 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
 
 
 def main(argv: Optional[List[str]] = None) -> None:
-
     args = parse_args(argv)
 
     events = load_events(args.file)
