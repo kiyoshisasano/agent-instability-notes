@@ -1,20 +1,29 @@
 """Generate synthetic JSONL traces for agent-instability-notes.
 
-This script intentionally stays framework-agnostic. It emits small JSON objects
-(1 per line) that can be used with the notebooks and metric scripts in this repo.
+This script intentionally stays framework-agnostic. It emits small JSON
+objects (1 per line) that can be used with the notebooks and metric scripts
+in this repo.
 
 Usage examples:
 
   # Long-horizon toy traces (default)
-  python generate_synthetic_traces.py --variant long_horizon --sessions 3 --turns 30 \
+  python generate_synthetic_traces.py \
+    --variant long_horizon \
+    --sessions 3 \
+    --turns 30 \
     > long_horizon_traces.jsonl
 
   # Noisy mixed sessions
-  python generate_synthetic_traces.py --variant noisy_mixed --sessions 5 --noise medium \
+  python generate_synthetic_traces.py \
+    --variant noisy_mixed \
+    --sessions 5 \
+    --noise medium \
     > noisy_mixed.jsonl
 
   # Minimal correction-loop traces
-  python generate_synthetic_traces.py --variant simple_correction_loop --sessions 2 \
+  python generate_synthetic_traces.py \
+    --variant simple_correction_loop \
+    --sessions 2 \
     > simple_loops.jsonl
 """
 
@@ -62,8 +71,11 @@ def _rand_id(prefix: str, width: int = 8) -> str:
 
 
 def _base_start_time() -> datetime:
-    # Arbitrary fixed base so runs are comparable but still distinct per run
-    return datetime(2025, 1, 1, 10, 0, 0) + timedelta(seconds=random.randint(0, 60))
+    # Arbitrary fixed base so runs are comparable
+    # but still distinct per run
+    return datetime(2025, 1, 1, 10, 0, 0) + timedelta(
+        seconds=random.randint(0, 60)
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -71,7 +83,11 @@ def _base_start_time() -> datetime:
 # ---------------------------------------------------------------------------
 
 
-def generate_long_horizon_session(trace_idx: int, turns: int, noise: str) -> Iterable[Event]:
+def generate_long_horizon_session(
+    trace_idx: int,
+    turns: int,
+    noise: str,
+) -> Iterable[Event]:
     base = _base_start_time()
     trace_id = f"lh_{trace_idx:03d}"
 
@@ -109,7 +125,9 @@ def generate_long_horizon_session(trace_idx: int, turns: int, noise: str) -> Ite
         "input",
         {
             "turn": 1,
-            "content": "Run a multi-step checklist and keep it stable over time.",
+            "content": (
+                "Run a multi-step checklist and keep it stable over time."
+            ),
         },
     )
 
@@ -145,7 +163,12 @@ def generate_long_horizon_session(trace_idx: int, turns: int, noise: str) -> Ite
             {
                 "turn": turn,
                 "latency_ms": base_latency,
-                "note": _reason_note(turn, drift_turn, recovery_turn, relapse_turn),
+                "note": _reason_note(
+                    turn,
+                    drift_turn,
+                    recovery_turn,
+                    relapse_turn,
+                ),
             },
         )
 
@@ -163,7 +186,9 @@ def generate_long_horizon_session(trace_idx: int, turns: int, noise: str) -> Ite
             )
 
     # Final outcome
-    final_status = "stable" if relapse_turn > turns else "relapse_after_recovery"
+    final_status = (
+        "stable" if relapse_turn > turns else "relapse_after_recovery"
+    )
     yield emit(
         "system",
         "session_end",
@@ -193,7 +218,9 @@ def _reason_note(turn: int, drift: int, recovery: int, relapse: int) -> str:
 # ---------------------------------------------------------------------------
 
 
-def generate_simple_correction_loop_session(trace_idx: int) -> Iterable[Event]:
+def generate_simple_correction_loop_session(
+    trace_idx: int,
+) -> Iterable[Event]:
     base = _base_start_time()
     trace_id = f"loop_{trace_idx:03d}"
     ts = base
@@ -242,7 +269,9 @@ def generate_simple_correction_loop_session(trace_idx: int) -> Iterable[Event]:
         {
             "turn": 2,
             "latency_ms": random.randint(260, 380),
-            "note": "Checklist grows to 6 items, constraint partially dropped.",
+            "note": (
+                "Checklist grows to 6 items, constraint partially dropped."
+            ),
         },
     )
 
