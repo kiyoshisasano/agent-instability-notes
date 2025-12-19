@@ -241,7 +241,7 @@ You’re encouraged to:
 
 This repository is a **framework-agnostic notebook** for understanding instability in multi-turn agents.  
 If you want the *formal governance model*, event lifecycle, and a full behavioral contract for  
-multi-turn stability, the parent conceptual project is:
+agent execution stability, the parent conceptual project is:
 
 👉 **PLD — Phase Loop Dynamics**  
 https://github.com/kiyoshisasano/agent-pld-metrics
